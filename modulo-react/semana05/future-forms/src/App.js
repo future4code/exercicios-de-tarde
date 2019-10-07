@@ -1,26 +1,58 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Etapa1 } from './components/Etapa1.js'
+import { Etapa2 } from './components/Etapa2.js'
+import { Etapa3 } from './components/Etapa3.js'
+import { EtapaFinal } from './components/EtapaFinal.js'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      etapaAtual: "1"
+    }
+  }
+
+  aoTerminarEtapa1 = (resultado) => {
+    if(resultado.escolaridade) {
+      if(resultado.escolaridade.toLowerCase().indexOf("superior") !== -1) {
+        this.setState({ etapaAtual: "2" })
+      } else {
+        this.setState({ etapaAtual: "3" })
+      }
+    }
+  }
+
+  aoTerminarEtapa2Ou3 = () => {
+    this.setState({ etapaAtual: "final" })
+  }
+
+  renderEtapaAtual = () => {
+    switch(this.state.etapaAtual){ 
+      case "1":
+        return (<Etapa1 aoClicarEmEnviar = { this.aoTerminarEtapa1 }/>)
+      case "2":
+        return (<Etapa2 aoClicarEmEnviar = { this.aoTerminarEtapa2Ou3 }/>)
+      case "3":
+        return (<Etapa3 aoClicarEmEnviar = { this.aoTerminarEtapa2Ou3 }/>)
+      case "final":
+        return (<EtapaFinal/>)
+      default:
+        return (<Etapa1 aoClicarEmEnviar = { this.aoTerminarEtapa1 }/>)
+    }
+  }
+
+  render = () => {
+    return (
+      <div className="App">
+        {
+          this.renderEtapaAtual()
+        }
+      </div>
+    );
+  }
+
 }
 
 export default App;
