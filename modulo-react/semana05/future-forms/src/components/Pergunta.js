@@ -14,6 +14,10 @@ const PerguntaSelect = styled.select`
   width: 100%;
 `
 
+const PerguntaError = styled.p `
+  color: red;
+`
+
 export class Pergunta extends React.Component {
 
   constructor(props) {
@@ -26,9 +30,11 @@ export class Pergunta extends React.Component {
   aoResponder = (e) => {
     if(this.props.tipo === "selecao") {
       const finalValue = e.target.value || this.props.options[0]
-      this.setState({ value: finalValue});
+      this.setState({ value: finalValue})
+      this.props.onChange(finalValue)
     }else {
-      this.setState({ value: e.target.value });
+      this.setState({ value: e.target.value })
+      this.props.onChange(e.target.value)
     }
   }
 
@@ -37,6 +43,7 @@ export class Pergunta extends React.Component {
       <PerguntaContainer>
         <p> { titulo } </p>
         <PerguntaInput onChange = { this.aoResponder } />
+      { this.props.mensagemDeErro && (<PerguntaError> { this.props.mensagemDeErro } </PerguntaError>) }
       </PerguntaContainer>
     )
   }
@@ -52,12 +59,12 @@ export class Pergunta extends React.Component {
             })
           }
         </PerguntaSelect>
+        { this.props.mensagemDeErro && (<PerguntaError> { this.props.mensagemDeErro } </PerguntaError>) }
       </PerguntaContainer>
     )
   }
 
   render = () => {
-    this.props.onChange(this.state.value)
     if(this.props.tipo === "selecao") {
       return this.geraPerguntaComSelecao(this.props.titulo, this.props.opcoes)
     }

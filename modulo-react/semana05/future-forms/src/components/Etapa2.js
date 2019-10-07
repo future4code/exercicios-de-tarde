@@ -15,6 +15,10 @@ export class Etapa2 extends React.Component {
     super(props)
     this.curso = ""
     this.unidadeDeEnsino = ""
+    this.state = {
+      erroDoCurso: "",
+      erroDaUnidadeDeEnsino: "",
+    }
   }
 
   atualizarCurso = (curso) => { this.curso = curso }
@@ -29,6 +33,17 @@ export class Etapa2 extends React.Component {
         })
       }
     } else {
+      if(!this.curso) {
+        this.setState({erroDoCurso: "Preencha seu curso"})
+      } else {
+        this.setState({erroDoCurso: ""})
+      }
+
+      if(!this.unidadeDeEnsino) {
+        this.setState({erroDaUnidadeDeEnsino: "Preencha sua unidade de ensino"})
+      } else {
+        this.setState({erroDaUnidadeDeEnsino: ""})
+      }
       window.alert("Preencha todas as perguntas da ETAPA 2 antes de prosseguir!")
     }
     
@@ -41,11 +56,13 @@ export class Etapa2 extends React.Component {
         <Pergunta
           onChange={ this.atualizarCurso }
           titulo={"5. Qual curso?"}
+          mensagemDeErro = { this.state.erroDoCurso }
         />
         <br/>
         <Pergunta
           onChange={ this.atualizarUnidadeDeEnsino }
           titulo={"6. Qual a unidade de ensino?"}
+          mensagemDeErro = { this.state.erroDaUnidadeDeEnsino }
         />
         <br/>
         <Etapa2Botao onClick = { this.aoClicarNoProximo }> Finalizar </Etapa2Botao>
