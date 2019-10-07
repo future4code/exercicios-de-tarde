@@ -28,13 +28,17 @@ export class Etapa1 extends React.Component {
   }
 
   aoClicarNoProximo = () => {
-    if (this.props.aoClicarEmEnviar) {
-      this.props.aoClicarEmEnviar({
-        nome: this.nome,
-        idade: this.idade,
-        email: this.email,
-        escolaridade: this.escolaridade || "Ensino Médio Incompleto"
-      })
+    if(this.nome && this.idade && this.email) {
+      if (this.props.aoClicarEmEnviar) {
+        this.props.aoClicarEmEnviar({
+          nome: this.nome,
+          idade: this.idade,
+          email: this.email,
+          escolaridade: this.escolaridade || "Ensino Médio Incompleto"
+        })
+      }
+    } else {
+      window.alert("Preencha todas as perguntas da ETAPA 1 antes de prosseguir!")
     }
   }
 

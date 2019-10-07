@@ -21,11 +21,15 @@ export class Etapa3 extends React.Component {
   atualizarCursoComplementar = (cursoComplementar) => { this.cursoComplementar = cursoComplementar }
 
   aoClicarNoProximo = () => {
-    if(this.props.aoClicarEmEnviar) {
-      this.props.aoClicarEmEnviar({
-        terminarEnsinoSuperior: this.terminarEnsinoSuperior,
-        cursoComplementar: this.cursoComplementar
-      })
+    if(this.terminarEnsinoSuperior){
+      if(this.props.aoClicarEmEnviar) {
+        this.props.aoClicarEmEnviar({
+          terminarEnsinoSuperior: this.terminarEnsinoSuperior,
+          cursoComplementar: this.cursoComplementar || "Curso técnico"
+        })
+      }
+    } else {
+      window.alert("Preencha todas as perguntas da ETAPA 3 antes de prosseguir!")
     }
   }
 

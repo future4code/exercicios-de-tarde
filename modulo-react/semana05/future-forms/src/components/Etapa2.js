@@ -21,12 +21,17 @@ export class Etapa2 extends React.Component {
   atualizarUnidadeDeEnsino = (unidadeDeEnsino) => { this.unidadeDeEnsino = unidadeDeEnsino }
 
   aoClicarNoProximo = () => {
-    if(this.props.aoClicarEmEnviar) {
-      this.props.aoClicarEmEnviar({
-        curso: this.curso,
-        unidadeDeEnsino: this.unidadeDeEnsino
-      })
+    if(this.curso && this.unidadeDeEnsino) {
+      if(this.props.aoClicarEmEnviar) {
+        this.props.aoClicarEmEnviar({
+          curso: this.curso,
+          unidadeDeEnsino: this.unidadeDeEnsino
+        })
+      }
+    } else {
+      window.alert("Preencha todas as perguntas da ETAPA 2 antes de prosseguir!")
     }
+    
   }
 
   render = () => {
